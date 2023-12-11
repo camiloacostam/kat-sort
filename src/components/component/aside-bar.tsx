@@ -1,10 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { LayoutDashboardIcon } from "./icons/layout-dashboard-icon";
 import { CreditCardIcon } from "./icons/credit-card-icon";
 import { SettingsIcon } from "./icons/settings-icon";
 import { LogOutIcon } from "./icons/log-out-icon";
+import { Button } from "../ui/button";
+import { usePathname } from "next/navigation";
 
 export function Aside() {
+  const pathname = usePathname();
+  console.log(pathname);
   return (
     <nav className="bg-gray-800 text-white w-full md:w-64 min-h-screen px-4 py-6 flex flex-col justify-between md:static">
       <div>
@@ -16,25 +22,22 @@ export function Aside() {
         </Link>
         <div className="space-y-4">
           <Link
-            className="flex items-center gap-2 py-2 px-3 rounded-md hover:bg-gray-700"
-            href="#"
+            className={`${
+              pathname === "/dashboard" ? "bg-gray-700" : ""
+            } flex items-center gap-2 py-2 px-3 rounded-md hover:bg-gray-700`}
+            href="/dashboard"
           >
             <LayoutDashboardIcon className="w-6 h-6" />
             <span>Dashboard</span>
           </Link>
           <Link
             className="flex items-center gap-2 py-2 px-3 rounded-md hover:bg-gray-700"
-            href="#"
+            href="/dashboard/add-test"
           >
-            <CreditCardIcon className="w-6 h-6" />
-            <span>My Cards</span>
-          </Link>
-          <Link
-            className="flex items-center gap-2 py-2 px-3 rounded-md hover:bg-gray-700"
-            href="#"
-          >
-            <SettingsIcon className="w-6 h-6" />
-            <span>Settings</span>
+            <Button className="w-full flex gap-3">
+              <CreditCardIcon className="w-6 h-6" />
+              <span>New Test</span>
+            </Button>
           </Link>
         </div>
       </div>
