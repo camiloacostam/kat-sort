@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 
 export function Aside() {
   const pathname = usePathname();
-  console.log(pathname);
+
   return (
     <nav className="bg-gray-800 text-white w-full md:w-64 min-h-screen px-4 py-6 flex flex-col justify-between md:static">
       <div>
