@@ -1,7 +1,7 @@
-import create from "zustand";
+import { create } from "zustand";
 
-const sessionStore = create((set) => ({
-  isLoggedIn: false,
+const useAuthStore = create((set) => ({
+  isAuthenticated: false,
   authToken: undefined,
   user: undefined,
   login: async (email, password) => {
@@ -11,7 +11,7 @@ const sessionStore = create((set) => ({
         password,
       });
       set({
-        isLoggedIn: true,
+        isAuthenticated: true,
         authToken: response.data.token,
         user: response.data.user,
       });
@@ -21,4 +21,4 @@ const sessionStore = create((set) => ({
   },
 }));
 
-export default sessionStore;
+export default useAuthStore;

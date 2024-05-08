@@ -2,6 +2,8 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 //Pages
 import { ErrorNotFoundPage, Login, SignUp } from "./pages";
+// Features
+import { ProtectedRoute } from "./features/routes";
 
 function App() {
   return (
@@ -10,16 +12,11 @@ function App() {
       <main>
         <Routes>
           <Route path="*" element={<ErrorNotFoundPage />} />
-          <Route
-            path="/"
-            element={
-              <div>
-                <h1>Hola Kat Sort</h1>
-              </div>
-            }
-          />
           <Route path="/login" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/registro" element={<SignUp />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<h1>Dashboard</h1>} />
+          </Route>
         </Routes>
       </main>
     </>
