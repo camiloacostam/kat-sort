@@ -1,4 +1,5 @@
-import useAuthStore from "./use-auth-store";
-import { Login } from "./login";
+import useAuthStore from './use-auth-store'
+import { Login } from './auth/login'
+import { RegisterUserForm } from './register'
 
-export { useAuthStore, Login };
+export { useAuthStore, Login, RegisterUserForm }
