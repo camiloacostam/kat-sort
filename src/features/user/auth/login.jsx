@@ -26,7 +26,7 @@ export const Login = ({ onSubmit }) => {
   } = useForm({ resolver: yupResolver(schema) })
 
   const handleLogin = (data) => {
-    console.log(data)
+    onSubmit(data)
   }
   return (
     <div className="flex items-center justify-center ">

@@ -3,8 +3,7 @@ import { useEffect } from 'react'
 import useAuthStore from '../auth-store'
 import AuthAPI from './auth-api'
 // Jwt utilities
-import jwtDecode from 'jwt-decode'
-import { set } from 'react-hook-form'
+import { jwtDecode } from 'jwt-decode'
 
 export default function useAuth() {
   const { isAuthenticated, user, token, error, login, logOut, setUser } =
@@ -34,4 +33,6 @@ export default function useAuth() {
   useEffect(() => {
     checkAuth()
   }, [token, setUser, logOut])
+
+  return { isAuthenticated, user, token, error, login, logOut }
 }

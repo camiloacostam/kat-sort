@@ -1,7 +1,19 @@
-import { Card } from "@nextui-org/react";
-import { Login } from "../features/user";
+import { Card } from '@nextui-org/react'
+import { Login } from '../features/user'
+// Hooks
+import { useAuth } from '../features/user'
+// Router
+import { useNavigate } from 'react-router-dom'
 
 export default function LoginPage() {
+  const { login, error } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogin = async (data) => {
+    await login(data?.email, data?.password).then(() => {
+      navigate('/')
+    })
+  }
   return (
     <span className="flex flex-col md:flex-row w-full h-screen justify-center align-top items-center gap-10 p-10">
       <div>
@@ -15,9 +27,10 @@ export default function LoginPage() {
       </div>
       <div>
         <Card>
-          <Login />
+          <Login onSubmit={handleLogin} />
+          {error && <p>{error}</p>}
         </Card>
       </div>
     </span>
-  );
+  )
 }

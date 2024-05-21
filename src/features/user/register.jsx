@@ -20,7 +20,7 @@ const registerSchema = yup.object().shape({
   lastName: yup.string().required('El campo apellido es requerido')
 })
 
-export const Register = ({ onSubmit }) => {
+export const RegisterUserForm = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
