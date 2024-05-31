@@ -1,7 +1,13 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 //Pages
-import { ErrorNotFoundPage, Login, SignUp, DashboardPage } from './pages'
+import {
+  ErrorNotFoundPage,
+  Login,
+  SignUp,
+  DashboardPage,
+  CreateTestPage
+} from './pages'
 // Features
 import { ProtectedRoute, PublicRoute } from './features/routes'
 
@@ -20,6 +26,7 @@ function App() {
           {/* Protected Routes*/}
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<DashboardPage />} />
+            <Route path="/crear-prueba" element={<CreateTestPage />} />
           </Route>
         </Routes>
       </main>
