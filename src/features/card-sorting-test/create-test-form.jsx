@@ -6,18 +6,13 @@ import DynamicItemListForm from './dynamic-item-list-form'
 // Hooks
 import useTest from './use-test'
 
-export default function CreateTestForm() {
-  const {
-    questions,
-    addQuestion,
-    removeQuestion,
-    cards,
-    addCard,
-    removeCard,
-    columns,
-    addColumn,
-    removeColumn
-  } = useTest()
+export default function CreateTestForm({
+  questions,
+  addQuestion,
+  removeQuestion
+}) {
+  const { cards, addCard, removeCard, columns, addColumn, removeColumn } =
+    useTest()
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

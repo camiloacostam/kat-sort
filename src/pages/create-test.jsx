@@ -4,8 +4,12 @@ import { CreateTestForm } from '../features/card-sorting-test'
 import { Button } from '@nextui-org/react'
 // UI Components
 import { Aside } from '../features/ui'
+// Hooks
+import useTest from '../features/card-sorting-test/use-test'
 
 export default function CreateTestPage() {
+  const { questions, addQuestion, removeQuestion, setQuestions } = useTest()
+
   return (
     <div className="flex flex-col md:flex-row w-full min-h-screen">
       <Aside />
@@ -17,7 +21,12 @@ export default function CreateTestPage() {
           <span></span>
         </section>
         <section id="create-test-form">
-          <CreateTestForm />
+          <CreateTestForm
+            questions={questions}
+            addQuestion={addQuestion}
+            setQuestions={setQuestions}
+            removeQuestion={removeQuestion}
+          />
         </section>
       </main>
     </div>

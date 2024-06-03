@@ -5,7 +5,7 @@ import { RemoveCircleOutline } from '../ui/icons'
 //Utilities
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 
 const questionSchema = yup.object().shape({
   question: yup
@@ -15,23 +15,23 @@ const questionSchema = yup.object().shape({
     )
 })
 
-export default function DynamicQuestionaryForm({
-  questions = ['pregunta 1'],
-  onAddQuestion,
-  onRemoveQuestion
-}) {
-  const {} = useForm({
+export default function DynamicQuestionaryForm() {
+  const { control, handleSubmit, getValues, trigger } = useForm({
     resolver: yupResolver(questionSchema),
-    defaultValues: { questions: [{ question: '' }] }
+    defaultValues: { questions: [{ question: [''] }] }
   })
 
-  const handleAddQuestion = (event) => {
-    event.preventDefault()
-    onAddQuestion()
+  const { fields, append } = useFieldArray({ control, name: 'questions' })
+
+  const addQuestion = async () => {
+    const valid = await trigger()
+    if (valid) {
+      append('')
+    }
   }
 
-  const handleRemoveQuestion = (questionId) => {
-    onRemoveQuestion(questionId)
+  const onSubmit = (data) => {
+    console.log(data)
   }
 
   return (
