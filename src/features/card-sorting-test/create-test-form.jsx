@@ -1,18 +1,19 @@
+import PropTypes from "prop-types";
 //Next UI Components
-import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/react'
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 // Components
-import DynamicQuestionaryForm from './dynamic-questionary-form'
-import DynamicItemListForm from './dynamic-item-list-form'
+import DynamicQuestionaryForm from "./dynamic-questionary-form";
+import DynamicItemListForm from "./dynamic-item-list-form";
 // Hooks
-import useTest from './use-test'
+import useTest from "./use-test";
 
 export default function CreateTestForm({
   questions,
   addQuestion,
-  removeQuestion
+  removeQuestion,
 }) {
   const { cards, addCard, removeCard, columns, addColumn, removeColumn } =
-    useTest()
+    useTest();
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -70,5 +71,11 @@ export default function CreateTestForm({
         </Card>
       </div>
     </div>
-  )
+  );
 }
+
+CreateTestForm.propTypes = {
+  questions: PropTypes.array.isRequired,
+  addQuestion: PropTypes.func.isRequired,
+  removeQuestion: PropTypes.func.isRequired,
+};
