@@ -84,12 +84,12 @@ export default function CreateTestForm({
           </CardHeader>
           <CardBody>
             <DynamicQuestionaryForm
-              items={columns}
-              addItem={addColumn}
-              removeItem={removeColumn}
-              setItems={setColumns}
-              updateItem={updateColumn}
-              itemListHeaderLabel="Categorías Creadas"
+              questions={columns}
+              addQuestion={addColumn}
+              removeQuestion={removeColumn}
+              setQuestions={setColumns}
+              updateQuestion={updateColumn}
+              questionListHeaderLabel="Categorías Creadas"
               inputLabel="Categoría"
             />
           </CardBody>
