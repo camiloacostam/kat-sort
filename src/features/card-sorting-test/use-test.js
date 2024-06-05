@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 export default function useTest() {
-  const [questions, setQuestions] = useState([''])
-  const [columns, setColumns] = useState([])
+  const [questions, setQuestions] = useState([])
   const [cards, setCards] = useState([])
+  const [columns, setColumns] = useState([])
 
   const addQuestion = (question) => {
     setQuestions([...questions, question])
@@ -16,8 +16,9 @@ export default function useTest() {
     setQuestions(updatedQuestions)
   }
 
-  const addColumn = (column) => {
-    setColumns([...columns, column])
+  const removeQuestion = (index) => {
+    const updatedQuestions = questions.filter((_, i) => i !== index)
+    setQuestions(updatedQuestions)
   }
 
   const addCard = (card) => {
@@ -28,25 +29,40 @@ export default function useTest() {
     setCards(cards.filter((c, index) => index !== cardId))
   }
 
-  const removeColumn = (columnId) => {
-    setColumns(columns.filter((c, index) => index !== columnId))
+  const updateCard = (index, newCard) => {
+    const updatedCard = cards.map((q, i) => (i === index ? newCard : q))
+    setCards(updatedCard)
   }
 
-  const removeQuestion = (questionId) => {
-    setQuestions(questions.filter((q, index) => index !== questionId))
+  const addColumn = (column) => {
+    setColumns([...columns, column])
+  }
+
+  const removeColumn = (index) => {
+    const updatedColumn = columns.filter((_, i) => i !== index)
+    setColumns(updatedColumn)
+  }
+
+  const updateColumn = (index, newColumn) => {
+    const updatedColumn = columns.map((q, i) => (i === index ? newColumn : q))
+    setColumns(updatedColumn)
   }
 
   return {
     questions,
-    columns,
-    cards,
     addQuestion,
     updateQuestion,
     setQuestions,
-    addColumn,
+    removeQuestion,
+    cards,
     addCard,
+    updateCard,
+    setCards,
     removeCard,
+    columns,
+    addColumn,
+    setColumns,
     removeColumn,
-    removeQuestion
+    updateColumn
   }
 }
