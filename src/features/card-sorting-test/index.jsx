@@ -1,5 +1,3 @@
-import TestTypeForm from "./test-type-form";
-import TestNameForm from "./test-name-form";
-import TestQuestionaryForm from "./test-questionary-form";
+import useStepForm from "./use-form-steps";
 
-export { TestTypeForm, TestNameForm, TestQuestionaryForm };
+export { useStepForm };

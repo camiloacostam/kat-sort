@@ -1,15 +1,16 @@
-import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
 //Pages
 import {
   ErrorNotFoundPage,
   Login,
   SignUp,
   DashboardPage,
-  CreateTestPage
-} from './pages'
+  CreateTestPage,
+} from "./pages";
 // Features
-import { ProtectedRoute, PublicRoute } from './features/routes'
+import { ProtectedRoute, PublicRoute } from "./features/routes";
+import NavBar from "./features/ui/nav-bar";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
         </Routes>
       </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

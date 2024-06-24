@@ -1,68 +1,25 @@
-import { useState } from 'react'
+import { useState } from "react";
+import { createTestApi } from "./test-api";
 
 export default function useTest() {
-  const [questions, setQuestions] = useState([])
-  const [cards, setCards] = useState([])
-  const [columns, setColumns] = useState([])
+  const [testSummary, setTestSummary] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const addQuestion = (question) => {
-    setQuestions([...questions, question])
-  }
+  const createTest = async () => {
+    setLoading(true);
+    setError(null);
 
-  const updateQuestion = (index, newQuestion) => {
-    const updatedQuestions = questions.map((q, i) =>
-      i === index ? newQuestion : q
-    )
-    setQuestions(updatedQuestions)
-  }
+    try {
+      const result = await createTestApi(testSummary);
 
-  const removeQuestion = (index) => {
-    const updatedQuestions = questions.filter((_, i) => i !== index)
-    setQuestions(updatedQuestions)
-  }
+      return result;
+    } catch (err) {
+      setError(err.response ? err.response.data : "Error desconocido");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const addCard = (card) => {
-    setCards([...cards, card])
-  }
-
-  const removeCard = (cardId) => {
-    setCards(cards.filter((c, index) => index !== cardId))
-  }
-
-  const updateCard = (index, newCard) => {
-    const updatedCard = cards.map((q, i) => (i === index ? newCard : q))
-    setCards(updatedCard)
-  }
-
-  const addColumn = (column) => {
-    setColumns([...columns, column])
-  }
-
-  const removeColumn = (index) => {
-    const updatedColumn = columns.filter((_, i) => i !== index)
-    setColumns(updatedColumn)
-  }
-
-  const updateColumn = (index, newColumn) => {
-    const updatedColumn = columns.map((q, i) => (i === index ? newColumn : q))
-    setColumns(updatedColumn)
-  }
-
-  return {
-    questions,
-    addQuestion,
-    updateQuestion,
-    setQuestions,
-    removeQuestion,
-    cards,
-    addCard,
-    updateCard,
-    setCards,
-    removeCard,
-    columns,
-    addColumn,
-    setColumns,
-    removeColumn,
-    updateColumn
-  }
+  return { testSummary, setTestSummary, createTest, loading, error };
 }

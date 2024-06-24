@@ -1,113 +1,117 @@
 // Card Sorting Test Features
 import {
-  TestTypeForm,
-  TestNameForm,
-  TestQuestionaryForm,
-} from "../features/card-sorting-test";
-// Next Ui Components
-import { Button, Card, CardHeader, CardBody } from "@nextui-org/react";
+  GeneralTestInfo,
+  TestQuestionary,
+  TestCards,
+  TestCategories,
+  TestSummary,
+} from "../features/card-sorting-test/create-test-steps";
+//Next Ui Components
+import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 // UI Components
 import { Aside } from "../features/ui";
 // Hooks
+import useStepForm from "../features/card-sorting-test/use-form-steps";
 import useTest from "../features/card-sorting-test/use-test";
-import CreateTestForm from "../features/card-sorting-test/create-test-form";
+
+const FORM_STEPS = [
+  "Información general",
+  "Cuestionario",
+  "Cartas",
+  "Categorías",
+  "Resumen de la prueba",
+];
 
 export default function CreateTestPage() {
+  const { step, nextStep, prevStep } = useStepForm();
+  const { testSummary, setTestSummary, createTest, loading } = useTest();
+
+  const renderStep = () => {
+    switch (step) {
+      case 0:
+        return (
+          <GeneralTestInfo
+            onContinue={nextStep}
+            testInfo={testSummary}
+            setTestInfo={setTestSummary}
+          />
+        );
+      case 1:
+        return (
+          <TestQuestionary
+            onContinue={nextStep}
+            onBack={prevStep}
+            questions={testSummary?.questions || []}
+            setTestInfo={setTestSummary}
+          />
+        );
+      case 2:
+        return (
+          <TestCards
+            onContinue={nextStep}
+            onBack={prevStep}
+            cards={testSummary?.cards || []}
+            setTestInfo={setTestSummary}
+          />
+        );
+      case 3:
+        return (
+          <TestCategories
+            onContinue={nextStep}
+            onBack={prevStep}
+            categories={testSummary?.categories || []}
+            setTestInfo={setTestSummary}
+          />
+        );
+      case 4:
+        return (
+          <TestSummary
+            testSummary={testSummary}
+            onBack={prevStep}
+            onCreateTest={createTest}
+            loading={loading}
+          />
+        );
+      default:
+        return (
+          <TestQuestionary
+            onContinue={nextStep}
+            onBack={prevStep}
+            questions={testSummary?.questions || []}
+            setTestInfo={setTestSummary}
+          />
+        );
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row w-full min-h-screen">
-      <Aside />
-      <main className="flex-grow bg-gray-100 p-6 ">
-        <section id="crearte-test-header">
+      <main className="flex-grow  bg-gray-100 p-6 px-20 ">
+        <section className="mb-10" id="crearte-test-header">
           <span>
             <h1 className="text-2xl font-semibold mb-1">Crear Test</h1>
             <p className="text-gray-500 mb-4">
-              A continuación encontrar los formularios y campos necesarios para
-              crear una prueba de Card Sorting.
+              A continuación debe seguir los pasos y completar los formularios y
+              campos necesarios para crear una prueba de Card Sorting.
             </p>
           </span>
         </section>
-        <section className="flex flex-col gap-3" id="create-test-form">
-          <Card>
-            <CardHeader className="flex flex-row justify-between items-start">
-              <span>
-                <h1 className="font-bold text-2xl">Nombre de la Prueba</h1>
-              </span>
-              <span>
-                <TestNameForm onSubmitName={(data) => console.log({ data })} />
-              </span>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row justify-between items-end p-4">
-              <span>
-                <h1 className="font-bold text-2xl">Typo de Prueba</h1>
-                <p className="text-gray-500">
-                  Seleccione el tipo de prueba que desea crear.
-                </p>
-              </span>
-              <TestTypeForm onSubmitType={(data) => console.log({ data })} />
-            </CardHeader>
-          </Card>
-          <section className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-            <div>
-              <Card className="">
-                <CardHeader>
-                  <span>
-                    <h1 className="font-bold text-2xl">Cuestionario</h1>
-                    <p className="text-gray-500">
-                      En el siguiente formulario podrás agregar tantas preguntas
-                      como considere necesarias para la prueba de Card sorting.
-                    </p>
-                  </span>
-                </CardHeader>
-                <CardBody>
-                  <TestQuestionaryForm
-                    onSubmitQuestionary={() => {}}
-                    inputLabel="Pregunta"
-                  />
-                </CardBody>
-              </Card>
-            </div>
-            <div>
-              <Card>
-                <CardHeader>
-                  <span>
-                    <h1 className="font-bold text-2xl">Cartas</h1>
-                    <p className="text-gray-500">
-                      En el siguiente formulario podrás agregar tantas cartas
-                      como considere necesarias para la prueba de Card sorting.
-                    </p>
-                  </span>
-                </CardHeader>
-                <CardBody>
-                  <TestQuestionaryForm
-                    onSubmitQuestionary={() => {}}
-                    inputLabel="Carta"
-                  />
-                </CardBody>
-              </Card>
-            </div>
-            <div>
-              <Card>
-                <CardHeader>
-                  <span>
-                    <h1 className="font-bold text-2xl">Categorías</h1>
-                    <p className="text-gray-500">
-                      En el siguiente formulario podrás agregar tantas
-                      categorías como considere necesarias para la prueba de
-                      Card sorting.
-                    </p>
-                  </span>
-                </CardHeader>
-                <CardBody>
-                  <TestQuestionaryForm
-                    onSubmitQuestionary={() => {}}
-                    inputLabel="Categoría"
-                  />
-                </CardBody>
-              </Card>
-            </div>
-          </section>
+        <section
+          className="flex flex-col gap-10 justify-center items-center w-full"
+          id="create-test-form"
+        >
+          <Breadcrumbs color="primary" size="lg">
+            {FORM_STEPS.map((formStep, index) => (
+              <BreadcrumbItem isCurrent={step === index} key={index}>
+                {formStep}
+              </BreadcrumbItem>
+            ))}
+          </Breadcrumbs>
+
+          <div className=" flex w-full items-center justify-center">
+            {" "}
+            {renderStep()}
+          </div>
         </section>
       </main>
     </div>
