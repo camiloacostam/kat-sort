@@ -27,77 +27,105 @@ export default function TestSummary({
   };
 
   return (
-    <Card className="py-1 min-w-[30%]">
-      <CardHeader className="flex flex-col  items-start">
-        <p className="text-sm text-gray-600 mb-0">Nombre de la prueba:</p>
-        <h2 className="font-bold text-3xl">{testSummary.name}</h2>
-      </CardHeader>
-      <Divider />
-      <CardBody>
-        <section id="summaryHeader" className="flex flex-col  items-start mb-3">
-          <p className="text-sm text-gray-600 mb-0">Tipo de prueba:</p>
-          <p className="capitalize">{testSummary.type}</p>
-        </section>
-
-        <section id="testQuestions" className="mb-3">
-          <p className=" font-bold text-lg">Preguntas:</p>
-          <ul className="capitalize ">
-            {testSummary.questions.map((question, index) => (
-              <li type="cicle" key={index}>
-                {question}
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section id="test" className="mb-3 flex gap-8">
-          <div>
-            <p className=" font-bold text-lg">Categorías:</p>
-            <ul className="capitalize ">
-              {testSummary.categories.map((category, index) => (
-                <li type="cicle" key={index}>
-                  {category}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <p className=" font-bold text-lg">Cartas:</p>
-            <ul className="capitalize ">
-              {testSummary.cards.map((card, index) => (
-                <li type="cicle" key={index}>
-                  {card}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      </CardBody>
-      <Divider />
-      <CardFooter className="flex gap-7 flex-row-reverse">
-        {loading ? (
-          <Spinner color="primary" />
-        ) : (
-          <>
-            <Button
-              onClick={handleCreateTest}
-              color="primary"
-              size="lg"
-              loading={loading}
-            >
-              Crear Test
-            </Button>
-            <Button
-              onClick={onBack}
-              color="primary"
-              size="lg"
-              loading={loading}
-            >
-              Volver atrás
-            </Button>{" "}
-          </>
-        )}
-      </CardFooter>
-    </Card>
+    <main className="w-full flex flex-col gap-4">
+      <header className="flex justify-between items-center">
+        <p className="text-gray-500 ">
+          A continuación se muestra los detalles de la prueba que desea crear,
+          recuerde revisarlos bien antes de crearla.
+        </p>
+        <span className="flex gap-2 flex-row-reverse">
+          {loading ? (
+            <Spinner color="primary" />
+          ) : (
+            <>
+              <Button
+                onClick={handleCreateTest}
+                color="primary"
+                size="lg"
+                loading={loading}
+                className="w-40"
+              >
+                Crear Test
+              </Button>
+              <Button
+                onClick={onBack}
+                color="primary"
+                size="lg"
+                loading={loading}
+              >
+                Volver atrás
+              </Button>{" "}
+            </>
+          )}
+        </span>
+      </header>
+      <Card>
+        <CardHeader className="flex flex-col gap-5 justify-between items-start">
+          <section className="flex flex-col  items-start">
+            <p className="text-sm text-gray-600 mb-0">Nombre de la prueba:</p>
+            <h2 className="font-bold text-3xl">{testSummary.name}</h2>
+          </section>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader className="flex flex-col gap-5 justify-between items-start">
+          <section id="summaryHeader" className="flex flex-col justify-end ">
+            <p className="text-sm text-gray-600 mb-0">Tipo de prueba:</p>
+            <p className="capitalize">{testSummary.type}</p>
+          </section>
+        </CardHeader>
+      </Card>
+      <section className="grid grid-cols-4 gap-3">
+        <span className="col-span-2">
+          <Card>
+            <CardHeader className="flex flex-col gap-5 justify-between items-start">
+              <section>
+                <p className="text-sm text-gray-600 mb-0">Cuestionario:</p>
+                <ul className="capitalize ">
+                  {testSummary.questions.map((question, index) => (
+                    <li type="cicle" key={index}>
+                      {question}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </CardHeader>
+          </Card>
+        </span>
+        <span>
+          <Card>
+            <CardHeader className="flex flex-col gap-5 justify-between items-start">
+              <section>
+                <p className="text-sm text-gray-600 mb-0">Cartas:</p>
+                <ul className="capitalize ">
+                  {testSummary.cards.map((card, index) => (
+                    <li type="cicle" key={index}>
+                      {card}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </CardHeader>
+          </Card>
+        </span>
+        <span>
+          <Card>
+            <CardHeader className="flex flex-col gap-5 justify-between items-start">
+              <section>
+                <p className="text-sm text-gray-600 mb-0">Categorías:</p>
+                <ul className="capitalize ">
+                  {testSummary.categories.map((category, index) => (
+                    <li type="cicle" key={index}>
+                      {category}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </CardHeader>
+          </Card>
+        </span>
+      </section>
+    </main>
   );
 }
 

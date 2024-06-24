@@ -1,3 +1,3 @@
-import Aside from './aside'
+import NavBar from "./nav-bar";
 
-export { Aside }
+export { NavBar };

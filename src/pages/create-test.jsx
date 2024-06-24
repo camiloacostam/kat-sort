@@ -8,8 +8,6 @@ import {
 } from "../features/card-sorting-test/create-test-steps";
 //Next Ui Components
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-// UI Components
-import { Aside } from "../features/ui";
 // Hooks
 import useStepForm from "../features/card-sorting-test/use-form-steps";
 import useTest from "../features/card-sorting-test/use-test";
@@ -91,8 +89,10 @@ export default function CreateTestPage() {
           <span>
             <h1 className="text-2xl font-semibold mb-1">Crear Test</h1>
             <p className="text-gray-500 mb-4">
-              A continuación debe seguir los pasos y completar los formularios y
-              campos necesarios para crear una prueba de Card Sorting.
+              Complete el formulario para crear una nueva prueba, recuerde que
+              puede volver al paso anterior en cualquier momento, en caso de
+              haber realizado algún cambio debe guardar la información antes de
+              continuar.
             </p>
           </span>
         </section>
