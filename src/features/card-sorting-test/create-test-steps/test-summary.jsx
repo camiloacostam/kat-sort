@@ -1,14 +1,6 @@
 import propTypes from "prop-types";
 // Next UI Components
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-  Spinner,
-} from "@nextui-org/react";
+import { Button, Card, CardHeader, Spinner } from "@nextui-org/react";
 // React Router
 import { useNavigate } from "react-router-dom";
 

@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@nextui-org/react": "^2.3.6",
     "axios": "^1.6.8",
+    "date-fns": "^3.6.0",
     "framer-motion": "^11.1.9",
     "jwt-decode": "^4.0.0",
     "prop-types": "^15.8.1",

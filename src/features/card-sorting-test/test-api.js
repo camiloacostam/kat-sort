@@ -30,4 +30,22 @@ const createTestApi = async (testData) => {
   return response.data;
 };
 
-export { createTestApi };
+const getUserTestsApi = async () => {
+  const userId = getUserId();
+
+  if (!userId) {
+    throw new Error("No se encontró el ID de usuario");
+  }
+
+  const response = await axios.get(`${API_URL}/${userId}`);
+
+  return response.data?.tests;
+};
+
+const getTestByAccessLinkApi = async (accessLink) => {
+  const response = await axios.get(`${API_URL}/solve/${accessLink}`);
+
+  return response.data;
+};
+
+export { createTestApi, getUserTestsApi, getTestByAccessLinkApi };

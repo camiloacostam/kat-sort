@@ -7,6 +7,7 @@ import {
   SignUp,
   DashboardPage,
   CreateTestPage,
+  TestPage,
 } from "./pages";
 // Features
 import { ProtectedRoute, PublicRoute } from "./features/routes";
@@ -19,6 +20,7 @@ function App() {
       <main>
         <Routes>
           <Route path="*" element={<ErrorNotFoundPage />} />
+          <Route path="/prueba/:accessLink" element={<TestPage />} />
           {/* Public Routes*/}
           <Route element={<PublicRoute />}>
             <Route path="/login" element={<Login />} />

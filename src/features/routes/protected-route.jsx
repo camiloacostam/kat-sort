@@ -7,7 +7,7 @@ export default function ProtectedRoute() {
   const authInfo = useStore(useAuthStore);
 
   return authInfo.isAuthenticated ? (
-    <main>
+    <main className="w-full min-h-screen">
       <header>
         <NavBar />
       </header>
