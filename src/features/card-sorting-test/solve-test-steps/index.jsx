@@ -1,3 +1,4 @@
 import TestInstructions from "./test-instructions";
+import RegisterUser from "./register-user";
 
-export { TestInstructions };
+export { TestInstructions, RegisterUser };

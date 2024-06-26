@@ -1,33 +1,33 @@
-import axios from 'axios'
+import axios from "axios";
 
-const API_URL = 'http://localhost:5000/api'
+const API_URL = `${process.env.REACT_APP_API_URL}`;
 
 const register = (nombre, apellido, correo, contraseña) => {
   return axios.post(`${API_URL}/users/register`, {
     nombre,
     apellido,
     correo,
-    contraseña
-  })
-}
+    contraseña,
+  });
+};
 
 const login = (email, password) => {
   return axios.post(`${API_URL}/auth/login`, {
     email,
-    password
-  })
-}
+    password,
+  });
+};
 
 const getUserInfo = (token) => {
   return axios.get(`${API_URL}/users/me`, {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-}
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
 export default {
   register,
   login,
-  getUserInfo
-}
+  getUserInfo,
+};

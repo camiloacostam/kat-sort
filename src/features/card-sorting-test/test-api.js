@@ -1,7 +1,7 @@
 import axios from "axios";
 import useAuthStore from "../user/auth-store";
 
-const API_URL = "http://localhost:5000/api/test";
+const API_URL = `${process.env.REACT_APP_API_URL}/test`;
 
 const getUserId = () => {
   // Primero intenta obtener el userId del estado global de Zustand
