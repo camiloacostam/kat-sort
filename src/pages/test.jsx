@@ -14,7 +14,7 @@ import {
 export default function TestPage() {
   const { accessLink } = useParams();
   const { step, nextStep, prevStep } = useStepForm();
-  const { test, getTest, loading } = useSolveTest();
+  const { test, solution, startTest, getTest, loading } = useSolveTest();
 
   useEffect(() => {
     getTest(accessLink);
@@ -27,7 +27,7 @@ export default function TestPage() {
           <TestInstructions testName={test?.name || ""} onContinue={nextStep} />
         );
       case 1:
-        return <RegisterUser onContinue={nextStep} />;
+        return <RegisterUser onContinue={nextStep} onStartTest={startTest} />;
     }
   };
 

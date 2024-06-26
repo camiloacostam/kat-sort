@@ -17,7 +17,7 @@ const schema = yup.object().shape({
   email: yup.string().email().required("Este campo es requerido"),
 });
 
-export default function RegisterUserStep({ onContinue }) {
+export default function RegisterUserStep({ onContinue, onStartTest }) {
   const {
     register,
     handleSubmit,
