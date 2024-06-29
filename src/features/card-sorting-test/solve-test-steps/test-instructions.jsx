@@ -26,7 +26,7 @@ export default function TestInstructions({ testName, onContinue }) {
           <h1 className="text-5xl font-semibold mb-2">Instrucciones:</h1>
         </CardHeader>
         <CardBody>
-          <ul className="list-disc list-inside">
+          <ul className="list-disc list-inside ">
             <li>
               En la columna de la izquierda encontraras las cartas que se han
               creado para este test

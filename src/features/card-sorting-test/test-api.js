@@ -1,7 +1,7 @@
 import axios from "axios";
 import useAuthStore from "../user/auth-store";
 
-const API_URL = `${import.meta.env.REACT_APP_API_URL}/test`;
+const API_URL = `${import.meta.env.VITE_APP_API_URL}/test`;
 
 const getUserId = () => {
   // Primero intenta obtener el userId del estado global de Zustand

@@ -9,6 +9,8 @@ import { Spinner } from "@nextui-org/react";
 import {
   TestInstructions,
   RegisterUser,
+  Questionary,
+  CardSortingTest,
 } from "../features/card-sorting-test/solve-test-steps";
 
 export default function TestPage() {
@@ -27,10 +29,31 @@ export default function TestPage() {
           <TestInstructions testName={test?.name || ""} onContinue={nextStep} />
         );
       case 1:
-        return <RegisterUser onContinue={nextStep} onStartTest={startTest} />;
+        return (
+          <RegisterUser
+            onContinue={nextStep}
+            onStartTest={startTest}
+            accessLink={accessLink}
+            loading={loading}
+          />
+        );
+      case 2:
+        return (
+          <CardSortingTest initialSort={solution?.sort} />
+          // <Questionary
+          //   questions={test?.questions}
+          //   onContinue={nextStep}
+          //   onSaveAnswers={() => {}}
+          // />
+        );
+      case 3:
+        <>
+          <h1></h1>
+        </>;
     }
   };
 
+  console.log(solution);
   return (
     <section className="w-full flex flex-col ">
       <header className="w-full py-5 px-3 bg-gray-100 flex justify-between border-b-1 mb-10">
@@ -38,7 +61,7 @@ export default function TestPage() {
           KatSort
         </h1>
       </header>
-      <main className=" flex w-full">
+      <main className="w-full h-full">
         {loading ? <Spinner /> : renderStep()}
       </main>
     </section>

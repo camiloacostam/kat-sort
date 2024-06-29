@@ -32,9 +32,10 @@ export default function DashboardPage() {
           </span>
         ) : (
           <section className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {tests.map((test, index) => (
-              <TestInfoCard test={test} key={index} />
-            ))}
+            {tests &&
+              tests.map((test, index) => (
+                <TestInfoCard test={test} key={index} />
+              ))}
           </section>
         )}
       </main>

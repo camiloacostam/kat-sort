@@ -1,23 +1,22 @@
 import propTypes from "prop-types";
 //Next Ui Components
-import {
-  Card,
-  CardBody,
-  Input,
-  CardFooter,
-  Divider,
-  Button,
-} from "@nextui-org/react";
+import { Card, CardBody, Input, Button, Spinner } from "@nextui-org/react";
 // Form validation
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("Este campo es requerido"),
 });
 
-export default function RegisterUserStep({ onContinue, onStartTest }) {
+export default function RegisterUserStep({
+  onContinue,
+  onStartTest,
+  accessLink,
+  loading,
+}) {
   const {
     register,
     handleSubmit,
@@ -29,7 +28,15 @@ export default function RegisterUserStep({ onContinue, onStartTest }) {
     },
   });
 
-  const onSubmit = (data) => {};
+  const onSubmit = (data) => {
+    try {
+      onStartTest(accessLink, data.email).then(() => {
+        onContinue();
+      });
+    } catch (err) {
+      toast.error("Ha ocurrido un error al intentar iniciar la prueba");
+    }
+  };
 
   return (
     <span className="flex flex-col w-full justify-center align-top items-center gap-7 p-10">
@@ -37,10 +44,13 @@ export default function RegisterUserStep({ onContinue, onStartTest }) {
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
           Registro de usuario:
         </h1>
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 max-w-lg mx-auto ">
+        <p className="text-sm sm:text-base md:text-lg text-gray-500 max-w-2xl mx-auto ">
           Antes de comenzar es importantes que nos permitas conocerte un poco,
           por eso necesitamos que te registres unicamente con tu correo para
-          poder darle inicio a la prueba:{" "}
+          poder darle inicio a la prueba, Ten en cuenta ademas que una vez
+          iniciada la prueba no puedes refrescar la pagina o cerrar el navegador
+          dado que se dará por terminado el test y no podrás retomarlo, debiendo
+          iniciar uno nuevo en caso de que desees completarlo:
         </p>
       </div>
       <form
@@ -61,11 +71,13 @@ export default function RegisterUserStep({ onContinue, onStartTest }) {
             />
           </CardBody>
         </Card>
-        <div className="flex flex-row-reverse items-start justify-start">
-          <Button color="primary" type="submit" size="lg">
-            Registrar y Continuar
-          </Button>
-        </div>
+        {(loading && <Spinner />) || (
+          <div className="flex flex-row-reverse items-start justify-start">
+            <Button color="primary" type="submit" size="lg">
+              Registrar y Continuar
+            </Button>
+          </div>
+        )}
       </form>
     </span>
   );
@@ -73,4 +85,7 @@ export default function RegisterUserStep({ onContinue, onStartTest }) {
 
 RegisterUserStep.propTypes = {
   onContinue: propTypes.func.isRequired,
+  onStartTest: propTypes.func.isRequired,
+  accessLink: propTypes.string.isRequired,
+  loading: propTypes.bool.isRequired,
 };

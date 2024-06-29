@@ -23,17 +23,28 @@ export default function useSolveTest() {
     }
   };
 
-  const startTest = async (testId, userId) => {
+  const startTest = async (testId, userEmail) => {
     setLoading(true);
     setError(null);
 
     try {
-      const data = await startTestApi(testId, userId);
-      setSolution(data?.solutionId);
+      const sort = [
+        { id: "column-cards", category: "Cartas", cards: test?.cards },
+        ...test.categories.map((category, index) => ({
+          id: `column-${index}`,
+          category,
+          cards: [],
+        })),
+      ];
+
+      const data = await startTestApi(testId, userEmail, sort);
+      setSolution({ ...data?.solution });
 
       return data;
     } catch (err) {
       setError(err.response ? err.response.data : "Error desconocido");
+
+      return err;
     } finally {
       setLoading(false);
     }
