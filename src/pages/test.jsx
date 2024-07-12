@@ -11,12 +11,21 @@ import {
   RegisterUser,
   Questionary,
   CardSortingTest,
+  Congratulation,
 } from "../features/card-sorting-test/solve-test-steps";
 
 export default function TestPage() {
   const { accessLink } = useParams();
   const { step, nextStep, prevStep } = useStepForm();
-  const { test, solution, startTest, getTest, loading } = useSolveTest();
+  const {
+    test,
+    solution,
+    startTest,
+    getTest,
+    saveAnswers,
+    completeTest,
+    loading,
+  } = useSolveTest();
 
   useEffect(() => {
     getTest(accessLink);
@@ -39,21 +48,27 @@ export default function TestPage() {
         );
       case 2:
         return (
-          <CardSortingTest initialSort={solution?.sort} />
-          // <Questionary
-          //   questions={test?.questions}
-          //   onContinue={nextStep}
-          //   onSaveAnswers={() => {}}
-          // />
+          <Questionary
+            questions={test?.questions}
+            onContinue={nextStep}
+            onSaveAnswers={saveAnswers}
+            loading={loading}
+          />
         );
       case 3:
-        <>
-          <h1></h1>
-        </>;
+        return (
+          <CardSortingTest
+            initialSort={solution?.sort}
+            onBack={prevStep}
+            onContinue={nextStep}
+            onCompleteTest={completeTest}
+          />
+        );
+      case 4:
+        return <Congratulation />;
     }
   };
 
-  console.log(solution);
   return (
     <section className="w-full flex flex-col ">
       <header className="w-full py-5 px-3 bg-gray-100 flex justify-between border-b-1 mb-10">

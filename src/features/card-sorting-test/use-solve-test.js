@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getTestByAccessLinkApi } from "./test-api";
-import { startTestApi } from "./solution-api";
+import { startTestApi, saveAnswersApi, completeTestApi } from "./solution-api";
 
 export default function useSolveTest() {
   const [test, setTest] = useState({});
@@ -50,11 +50,52 @@ export default function useSolveTest() {
     }
   };
 
+  const saveAnswers = async (answers) => {
+    if (!solution?._id) return false;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const answersArray = Object.values(answers);
+      const data = await saveAnswersApi(solution._id, answersArray);
+      setSolution({ ...data?.solution });
+
+      return data;
+    } catch (err) {
+      setError(err.response ? err.response.data : "Error desconocido");
+      return err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const completeTest = async (sort) => {
+    if (!solution?._id) return false;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await completeTestApi(solution._id, sort);
+      setSolution({ ...data?.solution });
+
+      return data;
+    } catch (err) {
+      setError(err.response ? err.response.data : "Error desconocido");
+      return err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     test,
     solution,
     getTest,
     startTest,
+    saveAnswers,
+    completeTest,
     loading,
     error,
   };

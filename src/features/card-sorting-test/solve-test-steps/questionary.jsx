@@ -10,6 +10,7 @@ export default function Questionary({
   questions = [],
   onContinue,
   onSaveAnswers,
+  loading,
 }) {
   const shape = {};
   questions.forEach((_, index) => {
@@ -29,11 +30,15 @@ export default function Questionary({
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    onSaveAnswers(data)
+      .then(() => {
+        onContinue();
+      })
+      .catch(() => {});
   };
 
   return (
-    <span className="flex flex-col gap-5 items-center">
+    <span className="px-20 flex flex-col gap-5 items-center">
       <div className=" w-[30%] flex flex-col gap-5 items-start text-start">
         <h1 className="text-start text-3xl font-bold">Cuestionario: </h1>
       </div>
@@ -58,9 +63,11 @@ export default function Questionary({
           </Card>
         ))}
         <div className="flex flex-row-reverse items-start justify-start">
-          <Button color="primary" type="submit" size="lg">
-            Guardar y Continuar
-          </Button>
+          {(loading && <Spinner />) || (
+            <Button color="primary" type="submit" size="lg">
+              Guardar y Continuar
+            </Button>
+          )}
         </div>
       </form>
     </span>
@@ -71,4 +78,5 @@ Questionary.propTypes = {
   questions: propTypes.array.isRequired,
   onContinue: propTypes.func.isRequired,
   onSaveAnswers: propTypes.func.isRequired,
+  loading: propTypes.bool.isRequired,
 };
