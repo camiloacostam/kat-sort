@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function Congratulation() {
   const navigate = useNavigate();
   return (
-    <span className="flex flex-col  w-full h-[80vh] justify-center align-top items-center gap-10 p-10">
-      <div>
+    <span className="flex flex-col w-full h-[80vh] justify-center align-top items-center gap-2 p-10">
+      <div className="text-center">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
           Prueba completada{" "}
         </h1>

@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { createTestApi, getUserTestsApi } from "./test-api";
+import { createTestApi, getUserTestsApi, getTestDetailApi } from "./test-api";
 
 export default function useTest() {
   const [testSummary, setTestSummary] = useState({});
+  const [testDetail, setTestDetail] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [tests, setTests] = useState([]);
@@ -35,12 +36,30 @@ export default function useTest() {
     }
   };
 
+  const getTestDetail = async (testId) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await getTestDetailApi(testId);
+      setTestDetail(data);
+      return data;
+    } catch (err) {
+      setError(err.response ? err.response.data : "Error desconocido");
+      return err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     tests,
     testSummary,
     getUserTest,
     setTestSummary,
     createTest,
+    getTestDetail,
+    testDetail,
     loading,
     error,
   };

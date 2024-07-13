@@ -1,4 +1,6 @@
 import propTypes from "prop-types";
+//Router
+import { useNavigate } from "react-router-dom";
 //date fns
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -8,6 +10,8 @@ import { Card, CardBody, CardHeader, Button } from "@nextui-org/react";
 import { toast } from "sonner";
 
 export default function TestInfoCard({ test }) {
+  const navigate = useNavigate();
+
   const copyTestLink = () => {
     const currentUrl = window.location.href;
     navigator.clipboard
@@ -35,7 +39,11 @@ export default function TestInfoCard({ test }) {
         <Button color="primary" onClick={copyTestLink}>
           Copiar Link de la prueba
         </Button>
-        <Button color="primary" size="md">
+        <Button
+          color="primary"
+          size="md"
+          onClick={() => navigate(`/prueba/detalle/${test?._id}`)}
+        >
           Ver detalle de la prueba
         </Button>
       </CardBody>

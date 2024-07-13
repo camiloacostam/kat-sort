@@ -4,6 +4,7 @@ import SignUp from "./sing-up";
 import DashboardPage from "./dashboard";
 import CreateTestPage from "./create-test";
 import TestPage from "./test";
+import TestDetailPage from "./test-detail";
 
 export {
   ErrorNotFoundPage,
@@ -12,4 +13,5 @@ export {
   DashboardPage,
   CreateTestPage,
   TestPage,
+  TestDetailPage,
 };

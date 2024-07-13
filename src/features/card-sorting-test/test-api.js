@@ -48,4 +48,15 @@ const getTestByAccessLinkApi = async (accessLink) => {
   return response.data;
 };
 
-export { createTestApi, getUserTestsApi, getTestByAccessLinkApi };
+const getTestDetailApi = async (testId) => {
+  const response = await axios.get(`${API_URL}/details/${testId}`);
+
+  return response.data;
+};
+
+export {
+  createTestApi,
+  getUserTestsApi,
+  getTestByAccessLinkApi,
+  getTestDetailApi,
+};

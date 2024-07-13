@@ -8,15 +8,14 @@ import {
   DashboardPage,
   CreateTestPage,
   TestPage,
+  TestDetailPage,
 } from "./pages";
 // Features
 import { ProtectedRoute, PublicRoute } from "./features/routes";
-import NavBar from "./features/ui/nav-bar";
 
 function App() {
   return (
     <>
-      <header></header>
       <main>
         <Routes>
           <Route path="*" element={<ErrorNotFoundPage />} />
@@ -30,6 +29,10 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/crear-prueba" element={<CreateTestPage />} />
+            <Route
+              path="/prueba/detalle/:testId"
+              element={<TestDetailPage />}
+            />
           </Route>
         </Routes>
       </main>
