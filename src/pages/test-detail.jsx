@@ -13,7 +13,7 @@ import {
 
 export default function TestDetailPage() {
   const { testId } = useParams();
-  const { getTestDetail, testDetail, loading, error } = useTest();
+  const { getTestDetail, testDetail, loading } = useTest();
 
   useEffect(() => {
     getTestDetail(testId);
