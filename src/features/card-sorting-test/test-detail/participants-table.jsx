@@ -1,4 +1,4 @@
-import propTypes from "prop-types";
+import propTypes from 'prop-types'
 
 import {
   Table,
@@ -7,8 +7,8 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-  Badge,
-} from "@nextui-org/react";
+  Badge
+} from '@nextui-org/react'
 
 export default function ParticipantsTable({ participants }) {
   return (
@@ -20,19 +20,19 @@ export default function ParticipantsTable({ participants }) {
         <TableColumn>% de sorteo de cartas</TableColumn>
         <TableColumn>Categorías creadas</TableColumn>
       </TableHeader>
-      <TableBody>
+      <TableBody emptyContent={'No se han registrado participantes aun.'}>
         {participants.map((participant, index) => (
           <TableRow key={index}>
-            <TableCell>{participant?.email || ""}</TableCell>
+            <TableCell>{participant?.email || ''}</TableCell>
             <TableCell>
               <Badge
                 content={
-                  participant?.status === "completed"
-                    ? "Completado"
-                    : "No completado"
+                  participant?.status === 'completed'
+                    ? 'Completado'
+                    : 'No completado'
                 }
                 color={
-                  participant?.status === "completed" ? "primary" : "danger"
+                  participant?.status === 'completed' ? 'primary' : 'danger'
                 }
               />
             </TableCell>
@@ -43,9 +43,9 @@ export default function ParticipantsTable({ participants }) {
         ))}
       </TableBody>
     </Table>
-  );
+  )
 }
 
 ParticipantsTable.propTypes = {
-  participants: propTypes.array.isRequired,
-};
+  participants: propTypes.array.isRequired
+}

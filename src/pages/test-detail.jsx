@@ -1,23 +1,39 @@
-import { useEffect } from "react";
+import { useEffect } from 'react'
 //React Router
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom'
 //Next Ui
-import { Tabs, Tab, Card, CardBody, Spinner } from "@nextui-org/react";
+import { Tabs, Tab, Card, CardBody, Spinner } from '@nextui-org/react'
 //custom hooks
-import { useTest } from "../features/card-sorting-test";
+import { useTest } from '../features/card-sorting-test'
 //Containers
 import {
   TestOverview,
   ParticipantsTable,
-} from "../features/card-sorting-test/test-detail";
+  QuestionaryTable,
+  Dendrogram,
+  CardsAnalysis,
+  CategoriesAnalysis,
+  SimilarityMatrix
+} from '../features/card-sorting-test/test-detail'
 
 export default function TestDetailPage() {
-  const { testId } = useParams();
-  const { getTestDetail, testDetail, loading } = useTest();
+  const { testId } = useParams()
+  const {
+    getTestDetail,
+    testDetail,
+    loading,
+    calculateDendrogram,
+    dendrogram,
+    getTestResultsAnalysis,
+    resultsAnalysis
+  } = useTest()
 
   useEffect(() => {
-    getTestDetail(testId);
-  }, [testId]);
+    getTestDetail(testId).then(() => {
+      // calculateDendrogram(res?.sorts)
+      getTestResultsAnalysis(testId)
+    })
+  }, [testId])
 
   return (
     <main className="p-10">
@@ -44,15 +60,36 @@ export default function TestDetailPage() {
                 />
               </Tab>
               <Tab title="Análisis de resultados" key="analysis">
-                <></>
+                <Tabs aria-label="Análisis de resultados">
+                  <Tab title="Cartas">
+                    <CardsAnalysis
+                      cardsAnalysis={resultsAnalysis?.cardsAnalysis || []}
+                    />
+                  </Tab>
+                  <Tab title="Categorías">
+                    <CategoriesAnalysis
+                      categoriesAnalysis={
+                        resultsAnalysis?.categoriesAnalysis || []
+                      }
+                    />
+                  </Tab>
+                  <Tab title="Dendrograma">
+                    {/* <Dendrogram data={dendrogram} /> */}
+                  </Tab>
+                  <Tab title="Matriz de Similitud">
+                    <SimilarityMatrix
+                      similarityMatrix={resultsAnalysis?.similarityMatrix || []}
+                    />
+                  </Tab>
+                </Tabs>
               </Tab>
               <Tab title="Cuestionario" key="questionary">
-                <></>
+                <QuestionaryTable questionary={testDetail?.questions || []} />
               </Tab>
             </Tabs>
           </section>
         </>
       )}
     </main>
-  );
+  )
 }

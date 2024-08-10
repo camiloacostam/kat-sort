@@ -1,62 +1,78 @@
-import axios from "axios";
-import useAuthStore from "../user/auth-store";
+import axios from 'axios'
+import useAuthStore from '../user/auth-store'
 
-const API_URL = `${import.meta.env.VITE_APP_API_URL}/test`;
+const API_URL = `${import.meta.env.VITE_APP_API_URL}/test`
 
 const getUserId = () => {
   // Primero intenta obtener el userId del estado global de Zustand
-  const userId = useAuthStore.getState().user?.id;
+  const userId = useAuthStore.getState().user?.id
   if (userId) {
-    return userId;
+    return userId
   }
 
   // Si no está en Zustand, intenta obtenerlo del session storage
-  const user = sessionStorage.getItem("user");
-  return user ? JSON.parse(user).id : null;
-};
+  const user = sessionStorage.getItem('user')
+  return user ? JSON.parse(user).id : null
+}
 
 const createTestApi = async (testData) => {
-  const userId = getUserId();
+  const userId = getUserId()
 
   if (!userId) {
-    throw new Error("No se encontró el ID de usuario");
+    throw new Error('No se encontró el ID de usuario')
   }
 
   const response = await axios.post(`${API_URL}/create`, {
     ...testData,
-    userId,
-  });
+    userId
+  })
 
-  return response.data;
-};
+  return response.data
+}
 
 const getUserTestsApi = async () => {
-  const userId = getUserId();
+  const userId = getUserId()
 
   if (!userId) {
-    throw new Error("No se encontró el ID de usuario");
+    throw new Error('No se encontró el ID de usuario')
   }
 
-  const response = await axios.get(`${API_URL}/${userId}`);
+  const response = await axios.get(`${API_URL}/${userId}`)
 
-  return response.data?.tests;
-};
+  return response.data?.tests
+}
 
 const getTestByAccessLinkApi = async (accessLink) => {
-  const response = await axios.get(`${API_URL}/solve/${accessLink}`);
+  const response = await axios.get(`${API_URL}/solve/${accessLink}`)
 
-  return response.data;
-};
+  return response.data
+}
 
 const getTestDetailApi = async (testId) => {
-  const response = await axios.get(`${API_URL}/details/${testId}`);
+  const response = await axios.get(`${API_URL}/details/${testId}`)
 
-  return response.data;
-};
+  return response.data
+}
+
+const calculateDendrogramApi = async (sortData) => {
+  const response = await axios.post(`${API_URL}/details/dendrogram`, {
+    sortData
+  })
+
+  return response.data
+}
+
+const getTestResultsAnalysisApi = async (testId) => {
+  const response = await axios.get(`${API_URL}/details/analysis/${testId}`)
+
+  return response.data
+}
 
 export {
   createTestApi,
   getUserTestsApi,
   getTestByAccessLinkApi,
   getTestDetailApi,
-};
+  calculateDendrogramApi,
+  getTestResultsAnalysisApi
+}
