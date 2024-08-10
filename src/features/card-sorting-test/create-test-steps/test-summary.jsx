@@ -1,22 +1,22 @@
-import propTypes from "prop-types";
+import propTypes from 'prop-types'
 // Next UI Components
-import { Button, Card, CardHeader, Spinner } from "@nextui-org/react";
+import { Button, Card, CardHeader, Spinner } from '@nextui-org/react'
 // React Router
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 export default function TestSummary({
   onBack,
   testSummary,
   onCreateTest,
-  loading,
+  loading
 }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleCreateTest = () => {
     onCreateTest().then(() => {
-      navigate("/");
-    });
-  };
+      navigate('/')
+    })
+  }
 
   return (
     <main className="w-full flex flex-col gap-4">
@@ -46,7 +46,7 @@ export default function TestSummary({
                 loading={loading}
               >
                 Volver atrás
-              </Button>{" "}
+              </Button>{' '}
             </>
           )}
         </span>
@@ -105,25 +105,34 @@ export default function TestSummary({
             <CardHeader className="flex flex-col gap-5 justify-between items-start">
               <section>
                 <p className="text-sm text-gray-600 mb-0">Categorías:</p>
-                <ul className="capitalize ">
-                  {testSummary.categories.map((category, index) => (
-                    <li type="cicle" key={index}>
-                      {category}
-                    </li>
-                  ))}
-                </ul>
+                {testSummary?.type === 'abierto' ? (
+                  <span>
+                    <p>
+                      No se registran categorías, dado que es un test de tipo
+                      abierto
+                    </p>
+                  </span>
+                ) : (
+                  <ul className="capitalize ">
+                    {testSummary.categories.map((category, index) => (
+                      <li type="cicle" key={index}>
+                        {category}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </section>
             </CardHeader>
           </Card>
         </span>
       </section>
     </main>
-  );
+  )
 }
 
 TestSummary.propTypes = {
   onCreateTest: propTypes.func.isRequired,
   onBack: propTypes.func.isRequired,
   testSummary: propTypes.object.isRequired,
-  loading: propTypes.bool.isRequired,
-};
+  loading: propTypes.bool.isRequired
+}

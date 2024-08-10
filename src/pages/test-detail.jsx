@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 //React Router
 import { useParams } from 'react-router-dom'
 //Next Ui
-import { Tabs, Tab, Card, CardBody, Spinner } from '@nextui-org/react'
+import { Tabs, Tab, Spinner, Button } from '@nextui-org/react'
 //custom hooks
 import { useTest } from '../features/card-sorting-test'
 //Containers
@@ -15,6 +15,7 @@ import {
   CategoriesAnalysis,
   SimilarityMatrix
 } from '../features/card-sorting-test/test-detail'
+import { toast } from 'sonner'
 
 export default function TestDetailPage() {
   const { testId } = useParams()
@@ -35,6 +36,18 @@ export default function TestDetailPage() {
     })
   }, [testId])
 
+  const copyTestLink = () => {
+    const currentUrl = window.location.origin
+    navigator.clipboard
+      .writeText(`${currentUrl}/prueba/${testDetail?.accessLink}`)
+      .then(() => {
+        toast.success('Link de la prueba copiado correctamente')
+      })
+      .catch(() => {
+        toast.error('No se pudo copiar el link de la prueba')
+      })
+  }
+
   return (
     <main className="p-10">
       {loading ? (
@@ -43,11 +56,16 @@ export default function TestDetailPage() {
         </div>
       ) : (
         <>
-          <header className="mb-4">
-            <p className="text-gray-500 text-sm font-semibold">
-              Detalles de la prueba:
-            </p>
-            <h1 className="text-3xl font-bold">{testDetail?.name}</h1>
+          <header className="mb-4 flex flex-row gap-6 justify-between ">
+            <span>
+              <p className="text-gray-500 text-sm font-semibold">
+                Detalles de la prueba:
+              </p>
+              <h1 className="text-3xl font-bold">{testDetail?.name}</h1>
+            </span>
+            <Button color="primary" onClick={copyTestLink}>
+              Copiar Link de la prueba
+            </Button>
           </header>
           <section>
             <Tabs aria-label="Options" size="lg" color="primary">
