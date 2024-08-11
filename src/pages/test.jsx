@@ -1,22 +1,22 @@
-import { useEffect } from "react";
+import { useEffect } from 'react'
 //Router
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom'
 // Test utilities
-import { useStepForm, useSolveTest } from "../features/card-sorting-test";
+import { useStepForm, useSolveTest } from '../features/card-sorting-test'
 // Next ui components
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from '@nextui-org/react'
 // Test Containers
 import {
   TestInstructions,
   RegisterUser,
   Questionary,
   CardSortingTest,
-  Congratulation,
-} from "../features/card-sorting-test/solve-test-steps";
+  Congratulation
+} from '../features/card-sorting-test/solve-test-steps'
 
 export default function TestPage() {
-  const { accessLink } = useParams();
-  const { step, nextStep, prevStep } = useStepForm();
+  const { accessLink } = useParams()
+  const { step, nextStep, prevStep } = useStepForm()
   const {
     test,
     solution,
@@ -24,19 +24,19 @@ export default function TestPage() {
     getTest,
     saveAnswers,
     completeTest,
-    loading,
-  } = useSolveTest();
+    loading
+  } = useSolveTest()
 
   useEffect(() => {
-    getTest(accessLink);
-  }, [accessLink]);
+    getTest(accessLink)
+  }, [accessLink])
 
   const renderStep = () => {
     switch (step) {
       case 0:
         return (
-          <TestInstructions testName={test?.name || ""} onContinue={nextStep} />
-        );
+          <TestInstructions testName={test?.name || ''} onContinue={nextStep} />
+        )
       case 1:
         return (
           <RegisterUser
@@ -45,7 +45,7 @@ export default function TestPage() {
             accessLink={accessLink}
             loading={loading}
           />
-        );
+        )
       case 2:
         return (
           <Questionary
@@ -54,20 +54,21 @@ export default function TestPage() {
             onSaveAnswers={saveAnswers}
             loading={loading}
           />
-        );
+        )
       case 3:
         return (
           <CardSortingTest
             initialSort={solution?.sort}
+            testType={test?.type}
             onBack={prevStep}
             onContinue={nextStep}
             onCompleteTest={completeTest}
           />
-        );
+        )
       case 4:
-        return <Congratulation />;
+        return <Congratulation />
     }
-  };
+  }
 
   return (
     <section className="w-full flex flex-col ">
@@ -80,5 +81,5 @@ export default function TestPage() {
         {loading ? <Spinner /> : renderStep()}
       </main>
     </section>
-  );
+  )
 }

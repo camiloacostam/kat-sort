@@ -1,25 +1,41 @@
-import { useState } from "react";
-import propTypes from "prop-types";
+import { useState } from 'react'
+import propTypes from 'prop-types'
+import AddCategoryForm from './add-category-form'
 // React DnD
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import TestBoard from "../test-board";
-import { Button } from "@nextui-org/react";
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import TestBoard from '../test-board'
+import { Button } from '@nextui-org/react'
 
 export default function CardSortingTest({
   initialSort,
+  testType,
   onContinue,
   onBack,
-  onCompleteTest,
+  onCompleteTest
 }) {
-  const [columns, setColumns] = useState(initialSort || []);
+  const [columns, setColumns] = useState(initialSort || [])
 
   const handleCompleteTest = () => {
     onCompleteTest(columns).then(() => {
-      onContinue();
-    });
-  };
+      onContinue()
+    })
+  }
 
+  const addColumns = (newCategory) => {
+    const { category } = newCategory
+    const newColumns = [
+      ...columns,
+      {
+        id: `column-${columns.length + 1}`,
+        category: category,
+        cards: []
+      }
+    ]
+    setColumns(newColumns)
+  }
+
+  console.log(initialSort)
   return (
     <div className="px-20">
       <span className="flex justify-between flex-row ">
@@ -44,18 +60,24 @@ export default function CardSortingTest({
           </Button>
         </div>
       </span>
+      {(testType === 'abierto' || testType === 'mixto') && (
+        <div className="max-w-[50%] mt-5">
+          <AddCategoryForm onAddCategory={addColumns} />
+        </div>
+      )}
       <span className="px-3">
         <DndProvider backend={HTML5Backend}>
           <TestBoard columns={columns} setColumns={setColumns} />
         </DndProvider>
       </span>
     </div>
-  );
+  )
 }
 
 CardSortingTest.propTypes = {
   initialSort: propTypes.array.isRequired,
+  testType: propTypes.string.isRequired,
   onContinue: propTypes.func.isRequired,
   onBack: propTypes.func.isRequired,
-  onCompleteTest: propTypes.func.isRequired,
-};
+  onCompleteTest: propTypes.func.isRequired
+}
