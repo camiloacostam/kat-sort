@@ -20,7 +20,7 @@ const registerSchema = yup.object().shape({
   lastName: yup.string().required('El campo apellido es requerido')
 })
 
-export const RegisterUserForm = ({ onSubmit }) => {
+export const RegisterUserForm = ({ onRegister, loading }) => {
   const {
     register,
     handleSubmit,
@@ -28,7 +28,7 @@ export const RegisterUserForm = ({ onSubmit }) => {
   } = useForm({ resolver: yupResolver(registerSchema) })
 
   const handleRegister = (data) => {
-    console.log(data)
+    onRegister(data)
   }
 
   return (
@@ -95,7 +95,12 @@ export const RegisterUserForm = ({ onSubmit }) => {
               errorMessage={errors.password && errors.password.message}
             />
           </div>
-          <Button color="primary" className="w-full" type="submit">
+          <Button
+            loading={loading}
+            color="primary"
+            className="w-full"
+            type="submit"
+          >
             Registrar
           </Button>
         </div>
