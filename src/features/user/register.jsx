@@ -1,7 +1,7 @@
 //Router Components
 import { Link } from 'react-router-dom'
 //NextUI Components
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input, Spinner } from '@nextui-org/react'
 //Form Validations utilities
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -95,14 +95,18 @@ export const RegisterUserForm = ({ onRegister, loading }) => {
               errorMessage={errors.password && errors.password.message}
             />
           </div>
-          <Button
-            loading={loading}
-            color="primary"
-            className="w-full"
-            type="submit"
-          >
-            Registrar
-          </Button>
+          {loading ? (
+            <Spinner size="large" />
+          ) : (
+            <Button
+              loading={loading}
+              color="primary"
+              className="w-full"
+              type="submit"
+            >
+              Registrar
+            </Button>
+          )}
         </div>
       </form>
       <div className="mt-4 text-center">
