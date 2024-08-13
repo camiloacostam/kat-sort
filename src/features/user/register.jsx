@@ -95,18 +95,20 @@ export const RegisterUserForm = ({ onRegister, loading }) => {
               errorMessage={errors.password && errors.password.message}
             />
           </div>
-          {loading ? (
-            <Spinner size="large" />
-          ) : (
-            <Button
-              loading={loading}
-              color="primary"
-              className="w-full"
-              type="submit"
-            >
-              Registrar
-            </Button>
-          )}
+          <div className="w-full flex items-center">
+            {loading ? (
+              <Spinner size="large" />
+            ) : (
+              <Button
+                loading={loading}
+                color="primary"
+                className="w-full"
+                type="submit"
+              >
+                Registrar
+              </Button>
+            )}
+          </div>
         </div>
       </form>
       <div className="mt-4 text-center">
