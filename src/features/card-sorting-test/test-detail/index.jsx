@@ -5,6 +5,7 @@ import Dendrogram from './dendrogram'
 import CardsAnalysis from './cards-analysis'
 import CategoriesAnalysis from './categories-analysis'
 import SimilarityMatrix from './similarity-matrix'
+import DownloadExcelButton from './download-excel-file'
 
 export {
   TestOverview,
@@ -13,5 +14,6 @@ export {
   Dendrogram,
   CategoriesAnalysis,
   CardsAnalysis,
-  SimilarityMatrix
+  SimilarityMatrix,
+  DownloadExcelButton
 }

@@ -13,7 +13,8 @@ import {
   Dendrogram,
   CardsAnalysis,
   CategoriesAnalysis,
-  SimilarityMatrix
+  SimilarityMatrix,
+  DownloadExcelButton
 } from '../features/card-sorting-test/test-detail'
 import { toast } from 'sonner'
 
@@ -67,6 +68,9 @@ export default function TestDetailPage() {
               Copiar Link de la prueba
             </Button>
           </header>
+          <section className="my-3">
+            <DownloadExcelButton data={{ testDetail, resultsAnalysis }} />
+          </section>
           <section>
             <Tabs aria-label="Options" size="lg" color="primary">
               <Tab title="Vista General" key="overview">

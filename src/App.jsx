@@ -1,5 +1,5 @@
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import './App.css'
+import { Routes, Route } from 'react-router-dom'
 //Pages
 import {
   ErrorNotFoundPage,
@@ -8,10 +8,10 @@ import {
   DashboardPage,
   CreateTestPage,
   TestPage,
-  TestDetailPage,
-} from "./pages";
+  TestDetailPage
+} from './pages'
 // Features
-import { ProtectedRoute, PublicRoute } from "./features/routes";
+import { ProtectedRoute, PublicRoute } from './features/routes'
 
 function App() {
   return (
@@ -21,10 +21,8 @@ function App() {
           <Route path="*" element={<ErrorNotFoundPage />} />
           <Route path="/prueba/:accessLink" element={<TestPage />} />
           {/* Public Routes*/}
-          <Route element={<PublicRoute />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<SignUp />} />
-          </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<SignUp />} />
           {/* Protected Routes*/}
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<DashboardPage />} />
@@ -37,7 +35,7 @@ function App() {
         </Routes>
       </main>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
