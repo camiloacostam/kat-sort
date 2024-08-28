@@ -54,10 +54,8 @@ const getTestDetailApi = async (testId) => {
   return response.data
 }
 
-const calculateDendrogramApi = async (sortData) => {
-  const response = await axios.post(`${API_URL}/details/dendrogram`, {
-    sortData
-  })
+const calculateDendrogramApi = async (testId) => {
+  const response = await axios.get(`${API_URL}/details/dendrogram/${testId}`)
 
   return response.data
 }

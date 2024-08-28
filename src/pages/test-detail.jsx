@@ -32,7 +32,7 @@ export default function TestDetailPage() {
 
   useEffect(() => {
     getTestDetail(testId).then(() => {
-      // calculateDendrogram(res?.sorts)
+      calculateDendrogram(testId)
       getTestResultsAnalysis(testId)
     })
   }, [testId])
@@ -48,6 +48,8 @@ export default function TestDetailPage() {
         toast.error('No se pudo copiar el link de la prueba')
       })
   }
+
+  console.log(dendrogram)
 
   return (
     <main className="p-10">
@@ -96,7 +98,7 @@ export default function TestDetailPage() {
                     />
                   </Tab>
                   <Tab title="Dendrograma">
-                    {/* <Dendrogram data={dendrogram} /> */}
+                    <Dendrogram dendrogramData={dendrogram?.dendrogram || {}} />
                   </Tab>
                   <Tab title="Matriz de Similitud">
                     <SimilarityMatrix

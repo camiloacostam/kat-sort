@@ -60,12 +60,12 @@ export default function useTest() {
     }
   }
 
-  const calculateDendrogram = async (sortData) => {
+  const calculateDendrogram = async (testId) => {
     setLoading(true)
     setError(null)
 
     try {
-      const dendrogram = await calculateDendrogramApi(sortData)
+      const dendrogram = await calculateDendrogramApi(testId)
       setDendrogram(dendrogram)
       return dendrogram
     } catch (err) {
