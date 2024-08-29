@@ -65,7 +65,7 @@ export default function CardSortingTest({
           <AddCategoryForm onAddCategory={addColumns} />
         </div>
       )}
-      <span className="px-3">
+      <span className="px-3 max-w-[90vw] overflow-auto">
         <DndProvider backend={HTML5Backend}>
           <TestBoard columns={columns} setColumns={setColumns} />
         </DndProvider>
