@@ -2,7 +2,18 @@ import { useEffect } from 'react'
 //React Router
 import { useParams } from 'react-router-dom'
 //Next Ui
-import { Tabs, Tab, Spinner, Button } from '@nextui-org/react'
+import {
+  Tabs,
+  Tab,
+  Spinner,
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure
+} from '@nextui-org/react'
 //custom hooks
 import { useTest } from '../features/card-sorting-test'
 //Containers
@@ -10,6 +21,7 @@ import {
   TestOverview,
   ParticipantsTable,
   QuestionaryTable,
+  CommentsTable,
   Dendrogram,
   CardsAnalysis,
   CategoriesAnalysis,
@@ -20,6 +32,7 @@ import { toast } from 'sonner'
 
 export default function TestDetailPage() {
   const { testId } = useParams()
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const {
     getTestDetail,
     testDetail,
@@ -49,8 +62,6 @@ export default function TestDetailPage() {
       })
   }
 
-  console.log(dendrogram)
-
   return (
     <main className="p-10">
       {loading ? (
@@ -59,6 +70,35 @@ export default function TestDetailPage() {
         </div>
       ) : (
         <>
+          <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <ModalContent className="py-3">
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1">
+                    <p className="text-red-600">
+                      Esta Seguro Desea Eliminar la prueba {testDetail?.name}?
+                    </p>
+                  </ModalHeader>
+                  <ModalBody>
+                    <p>
+                      Esta a punto de eliminar la prueba {testDetail?.name}, una
+                      vez se elimine no podrá volver a acceder a la prueba ni a
+                      los resultados asociados a esta.{' '}
+                    </p>
+                    <p>Desea continuar ?</p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button variant="light" onPress={onClose}>
+                      Volver
+                    </Button>
+                    <Button color="danger" onPress={() => {}}>
+                      Eliminar
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
           <header className="mb-4 flex flex-row gap-6 justify-between ">
             <span>
               <p className="text-gray-500 text-sm font-semibold">
@@ -66,9 +106,14 @@ export default function TestDetailPage() {
               </p>
               <h1 className="text-3xl font-bold">{testDetail?.name}</h1>
             </span>
-            <Button color="primary" onClick={copyTestLink}>
-              Copiar Link de la prueba
-            </Button>
+            <span className="flex gap-3">
+              <Button color="primary" onClick={copyTestLink}>
+                Copiar Link de la prueba
+              </Button>
+              <Button color="danger" onPress={onOpen}>
+                Eliminar Prueba
+              </Button>
+            </span>
           </header>
           <section className="my-3">
             <DownloadExcelButton data={{ testDetail, resultsAnalysis }} />
@@ -104,6 +149,9 @@ export default function TestDetailPage() {
                     <SimilarityMatrix
                       similarityMatrix={resultsAnalysis?.similarityMatrix || []}
                     />
+                  </Tab>
+                  <Tab title="Comentarios">
+                    <CommentsTable />
                   </Tab>
                 </Tabs>
               </Tab>

@@ -11,7 +11,7 @@ import {
   TestDetailPage
 } from './pages'
 // Features
-import { ProtectedRoute, PublicRoute } from './features/routes'
+import { ProtectedRoute } from './features/routes'
 
 function App() {
   return (

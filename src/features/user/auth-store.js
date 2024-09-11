@@ -18,11 +18,11 @@ const useAuthStore = create((set) => ({
       set({ error: error.response.data.message })
     }
   },
-  logout: () => {
+  logOut: function () {
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('user')
     sessionStorage.removeItem('isAuthenticated')
-    set({ user: null, token: null, isAuthenticated: false })
+    return set({ isAuthenticated: false, user: null, token: null })
   },
   setUser: (user) => set({ user })
 }))

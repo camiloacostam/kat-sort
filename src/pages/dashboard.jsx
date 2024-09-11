@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import { useTest } from "../features/card-sorting-test";
+import { useEffect } from 'react'
+import { useTest } from '../features/card-sorting-test'
 //Router Components
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 //nex Ui Components
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from '@nextui-org/react'
 //UI Components
-import { TestInfoCard } from "../features/card-sorting-test";
+import { TestInfoCard } from '../features/card-sorting-test'
 
 export default function DashboardPage() {
-  const { getUserTest, tests, loading } = useTest();
+  const { getUserTest, tests, loading } = useTest()
 
   useEffect(() => {
-    getUserTest();
-  }, []);
+    getUserTest()
+  }, [])
 
   return (
     <div className="flex flex-col bg-gray-100 p-6 px-20 w-full min-h-screen">
@@ -34,11 +34,13 @@ export default function DashboardPage() {
           <section className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {tests &&
               tests.map((test, index) => (
-                <TestInfoCard test={test} key={index} />
+                <div key={index}>
+                  <TestInfoCard test={test} key={index} />
+                </div>
               ))}
           </section>
         )}
       </main>
     </div>
-  );
+  )
 }

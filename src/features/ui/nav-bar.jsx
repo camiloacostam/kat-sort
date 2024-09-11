@@ -1,24 +1,38 @@
-import { useState } from "react";
+import { useState } from 'react'
+import useAuthStore from '../user/auth-store'
 // Router
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
+//NextUi
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem
+} from '@nextui-org/react'
 //Styles
-import styles from "./nav-bar.module.css";
+import styles from './nav-bar.module.css'
 
 const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const user = useAuthStore((state) => state.user)
+  const logOut = useAuthStore((state) => state.logOut)
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
+
+  const handleLogout = () => {
+    logOut()
+  }
 
   return (
     <nav className={`${styles.navbar} bg-gray-100`}>
       <div className={styles.container}>
         <div className={styles.logo}>KatSort</div>
         <div className={styles.hamburger} onClick={toggleMenu}>
-          {isOpen ? "✖" : "☰"}
+          {isOpen ? '✖' : '☰'}
         </div>
-        <ul className={`${styles.menu} ${isOpen ? styles.active : ""}`}>
+        <ul className={`${styles.menu} ${isOpen ? styles.active : ''}`}>
           <li className={styles.menuItem}>
             <Link className={`${styles.link} font-semibold`} to="/">
               Mis Pruebas
@@ -32,10 +46,22 @@ const NavBar = () => {
               Crear Prueba
             </Link>
           </li>
+          <li>
+            <Dropdown>
+              <DropdownTrigger>
+                <p className="font-bold cursor-pointer">{`${user.name} ${user.lastName}`}</p>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Menu Perfil">
+                <DropdownItem key="Logout" onClick={handleLogout}>
+                  <p> Cerrar Sesión</p>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </li>
         </ul>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar
