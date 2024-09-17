@@ -28,7 +28,10 @@ export default function TestInfoCard({ test }) {
     <Card className="p-4 cursor-pointer transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
       <CardHeader className="">
         <div className="grid gap-1  ">
-          <h1 className="text-3xl font-bold">{test?.name || ''}</h1>
+          <span className="flex gap-5">
+            <h1 className="text-3xl font-bold">{test?.name || ''}</h1>
+            <Button color="primary">Editar</Button>
+          </span>
           <p className="capitalize text-gray-500 text-md">
             Fecha de creación:{' '}
             {format(test?.createdAt, "MMMM, dd 'del' yyyy", { locale: es })}
