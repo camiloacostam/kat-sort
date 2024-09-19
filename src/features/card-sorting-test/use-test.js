@@ -5,7 +5,8 @@ import {
   getTestDetailApi,
   editTestNameApi,
   calculateDendrogramApi,
-  getTestResultsAnalysisApi
+  getTestResultsAnalysisApi,
+  deleteTestApi
 } from './test-api'
 
 export default function useTest() {
@@ -82,6 +83,21 @@ export default function useTest() {
     }
   }
 
+  const deleteTest = async (testId) => {
+    setLoading(true)
+    setError(null)
+
+    try {
+      const data = await deleteTestApi(testId)
+      return data
+    } catch (err) {
+      setError(err.response ? err.response.data : 'Error desconocido')
+      return err
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const calculateDendrogram = async (testId) => {
     setLoading(true)
     setError(null)
@@ -122,6 +138,7 @@ export default function useTest() {
     createTest,
     getTestDetail,
     editTestName,
+    deleteTest,
     calculateDendrogram,
     getTestResultsAnalysis,
     resultsAnalysis,

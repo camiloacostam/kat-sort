@@ -40,15 +40,18 @@ export default function DashboardPage() {
         ) : (
           <section className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {tests &&
-              tests.map((test, index) => (
-                <div key={index}>
-                  <TestInfoCard
-                    test={test}
-                    key={index}
-                    onEditTest={handleEditTestName}
-                  />
-                </div>
-              ))}
+              tests.map(
+                (test, index) =>
+                  test?.isActive && (
+                    <div key={index}>
+                      <TestInfoCard
+                        test={test}
+                        key={index}
+                        onEditTest={handleEditTestName}
+                      />
+                    </div>
+                  )
+              )}
           </section>
         )}
       </main>

@@ -62,6 +62,11 @@ const editTestNameApi = async (testId, newName) => {
   return response.data
 }
 
+const deleteTestApi = async (testId) => {
+  const response = await axios.patch(`${API_URL}/${testId}/delete`)
+  return response.data
+}
+
 const calculateDendrogramApi = async (testId) => {
   const response = await axios.get(`${API_URL}/details/dendrogram/${testId}`)
 
@@ -80,6 +85,7 @@ export {
   getTestByAccessLinkApi,
   getTestDetailApi,
   editTestNameApi,
+  deleteTestApi,
   calculateDendrogramApi,
   getTestResultsAnalysisApi
 }

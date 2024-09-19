@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 //Router
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 // Test utilities
 import { useStepForm, useSolveTest } from '../features/card-sorting-test'
 // Next ui components
-import { Spinner } from '@nextui-org/react'
+import { Button, Spinner } from '@nextui-org/react'
 // Test Containers
 import {
   TestInstructions,
@@ -16,6 +16,7 @@ import {
 
 export default function TestPage() {
   const { accessLink } = useParams()
+  const navigate = useNavigate()
   const { step, nextStep, prevStep } = useStepForm()
   const {
     test,
@@ -78,7 +79,22 @@ export default function TestPage() {
         </h1>
       </header>
       <main className="w-full h-full">
-        {loading ? <Spinner /> : renderStep()}
+        {loading ? (
+          <Spinner />
+        ) : test?.isActive ? (
+          renderStep()
+        ) : (
+          <span className="flex flex-col items-center gap-10">
+            <span className="flex flex-col items-center">
+              <p className="text-gray-600 text-lg ">
+                No es posible acceder al test
+              </p>
+            </span>
+            <Button color="primary" onClick={() => navigate('/')}>
+              Volver al inicio
+            </Button>
+          </span>
+        )}
       </main>
     </section>
   )
