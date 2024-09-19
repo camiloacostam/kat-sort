@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import propTypes from 'prop-types'
 //Router
 import { useNavigate } from 'react-router-dom'
@@ -8,8 +9,10 @@ import { es } from 'date-fns/locale'
 import { Card, CardBody, CardHeader, Button } from '@nextui-org/react'
 //notifications
 import { toast } from 'sonner'
+import EditTestNameForm from './test-detail/edit-test-name-form'
 
-export default function TestInfoCard({ test }) {
+export default function TestInfoCard({ test, onEditTest }) {
+  const [isEditing, setIsEditing] = useState(false)
   const navigate = useNavigate()
 
   const copyTestLink = () => {
@@ -28,10 +31,22 @@ export default function TestInfoCard({ test }) {
     <Card className="p-4 cursor-pointer transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
       <CardHeader className="">
         <div className="grid gap-1  ">
-          <span className="flex gap-5">
-            <h1 className="text-3xl font-bold">{test?.name || ''}</h1>
-            <Button color="primary">Editar</Button>
-          </span>
+          <>
+            {isEditing ? (
+              <EditTestNameForm
+                onCancelEdit={() => setIsEditing(false)}
+                currentName={test?.name}
+                onSave={(newName) => onEditTest(test?._id, newName?.name)}
+              />
+            ) : (
+              <span className="flex  flex-col gap-5 md:flex-row">
+                <h1 className="text-3xl font-bold">{test?.name || ''}</h1>
+                <Button color="primary" onClick={() => setIsEditing(true)}>
+                  Editar
+                </Button>
+              </span>
+            )}
+          </>
           <p className="capitalize text-gray-500 text-md">
             Fecha de creación:{' '}
             {format(test?.createdAt, "MMMM, dd 'del' yyyy", { locale: es })}
@@ -55,5 +70,6 @@ export default function TestInfoCard({ test }) {
 }
 
 TestInfoCard.propTypes = {
-  test: propTypes.object.isRequired
+  test: propTypes.object.isRequired,
+  onEditTest: propTypes.func.isRequired
 }

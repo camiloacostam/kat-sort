@@ -6,9 +6,16 @@ import { Link } from 'react-router-dom'
 import { Spinner } from '@nextui-org/react'
 //UI Components
 import { TestInfoCard } from '../features/card-sorting-test'
+import { toast } from 'sonner'
 
 export default function DashboardPage() {
-  const { getUserTest, tests, loading } = useTest()
+  const { getUserTest, editTestName, tests, loading } = useTest()
+
+  const handleEditTestName = async (testId, name) => {
+    await editTestName(testId, name)
+      .then(() => toast.success('Nombre de la prueba editado correctamente'))
+      .catch(() => toast.error('No se pudo editar el nombre de la prueba'))
+  }
 
   useEffect(() => {
     getUserTest()
@@ -35,7 +42,11 @@ export default function DashboardPage() {
             {tests &&
               tests.map((test, index) => (
                 <div key={index}>
-                  <TestInfoCard test={test} key={index} />
+                  <TestInfoCard
+                    test={test}
+                    key={index}
+                    onEditTest={handleEditTestName}
+                  />
                 </div>
               ))}
           </section>

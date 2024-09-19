@@ -43,8 +43,6 @@ export default function CardSortingTest({
     ]
     setColumns(newColumns)
   }
-
-  console.log(initialSort)
   return (
     <>
       <div className="px-20">

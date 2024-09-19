@@ -3,6 +3,7 @@ import {
   createTestApi,
   getUserTestsApi,
   getTestDetailApi,
+  editTestNameApi,
   calculateDendrogramApi,
   getTestResultsAnalysisApi
 } from './test-api'
@@ -60,6 +61,27 @@ export default function useTest() {
     }
   }
 
+  const editTestName = async (testId, name) => {
+    setLoading(true)
+    setError(null)
+
+    try {
+      const data = await editTestNameApi(testId, name)
+      const updatedTest = tests.findIndex((test) => test._id === testId)
+
+      setTests((prevTests) => {
+        prevTests[updatedTest].name = name
+        return prevTests
+      })
+      return data
+    } catch (err) {
+      setError(err.response ? err.response.data : 'Error desconocido')
+      return err
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const calculateDendrogram = async (testId) => {
     setLoading(true)
     setError(null)
@@ -99,6 +121,7 @@ export default function useTest() {
     setTestSummary,
     createTest,
     getTestDetail,
+    editTestName,
     calculateDendrogram,
     getTestResultsAnalysis,
     resultsAnalysis,
