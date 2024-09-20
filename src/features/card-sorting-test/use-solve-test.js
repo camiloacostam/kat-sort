@@ -33,7 +33,8 @@ export default function useSolveTest() {
         ...test.categories.map((category, index) => ({
           id: `column-${index}`,
           category,
-          cards: []
+          cards: [],
+          comments: []
         }))
       ]
 
