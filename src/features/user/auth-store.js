@@ -3,7 +3,7 @@ import AuthAPI from './auth/auth-api'
 
 const useAuthStore = create((set) => ({
   isAuthenticated: sessionStorage.getItem('token') ? true : false,
-  user: sessionStorage.getItem('user') || null,
+  user: JSON.parse(sessionStorage.getItem('user')) || null,
   token: sessionStorage.getItem('token') || null,
   error: null,
   login: async (email, password) => {

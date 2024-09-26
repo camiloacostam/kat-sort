@@ -34,7 +34,7 @@ export default function useSolveTest() {
           id: `column-${index}`,
           category,
           cards: [],
-          comments: []
+          comment: null
         }))
       ]
 
