@@ -1,42 +1,45 @@
-import propTypes from "prop-types";
+import propTypes from 'prop-types'
 //Next Ui Components
-import { Card, CardBody, Input, Button, Spinner } from "@nextui-org/react";
+import { Card, CardBody, Input, Button, Spinner } from '@nextui-org/react'
 // Form validation
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { useColumns } from '../../context'
 
 const schema = yup.object().shape({
-  email: yup.string().email().required("Este campo es requerido"),
-});
+  email: yup.string().email().required('Este campo es requerido')
+})
 
 export default function RegisterUserStep({
   onContinue,
   onStartTest,
   accessLink,
-  loading,
+  loading
 }) {
+  const { setColumns } = useColumns()
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      email: "",
-    },
-  });
+      email: ''
+    }
+  })
 
   const onSubmit = (data) => {
     try {
-      onStartTest(accessLink, data.email).then(() => {
-        onContinue();
-      });
+      onStartTest(accessLink, data.email).then((res) => {
+        setColumns(res.solution?.sort || [])
+        onContinue()
+      })
     } catch (err) {
-      toast.error("Ha ocurrido un error al intentar iniciar la prueba");
+      toast.error('Ha ocurrido un error al intentar iniciar la prueba')
     }
-  };
+  }
 
   return (
     <span className="flex flex-col w-full justify-center align-top items-center gap-7 p-10">
@@ -60,14 +63,14 @@ export default function RegisterUserStep({
         <Card>
           <CardBody>
             <Input
-              {...register("email")}
+              {...register('email')}
               label="Correo Electrónico"
               type="text"
               size="lg"
               width="100%"
               isInvalid={!!errors?.email}
               errorMessage={errors?.email?.message}
-              color={errors?.email ? "danger" : "default"}
+              color={errors?.email ? 'danger' : 'default'}
             />
           </CardBody>
         </Card>
@@ -80,12 +83,12 @@ export default function RegisterUserStep({
         )}
       </form>
     </span>
-  );
+  )
 }
 
 RegisterUserStep.propTypes = {
   onContinue: propTypes.func.isRequired,
   onStartTest: propTypes.func.isRequired,
   accessLink: propTypes.string.isRequired,
-  loading: propTypes.bool.isRequired,
-};
+  loading: propTypes.bool.isRequired
+}

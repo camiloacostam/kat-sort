@@ -12,6 +12,8 @@ import {
 } from './pages'
 // Features
 import { ProtectedRoute } from './features/routes'
+// context
+import { ColumnProvider } from './features/context'
 
 function App() {
   return (
@@ -19,7 +21,14 @@ function App() {
       <main>
         <Routes>
           <Route path="*" element={<ErrorNotFoundPage />} />
-          <Route path="/prueba/:accessLink" element={<TestPage />} />
+          <Route
+            path="/prueba/:accessLink"
+            element={
+              <ColumnProvider>
+                <TestPage />
+              </ColumnProvider>
+            }
+          />
           {/* Public Routes*/}
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<SignUp />} />

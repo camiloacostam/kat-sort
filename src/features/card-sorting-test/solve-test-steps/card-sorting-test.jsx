@@ -14,16 +14,27 @@ import {
   Button,
   useDisclosure
 } from '@nextui-org/react'
+// UI Components
+import { CommentModal } from '../../ui'
+// Context
+import { useColumns } from '../../context'
 
 export default function CardSortingTest({
-  initialSort,
   testType,
   onContinue,
   onBack,
   onCompleteTest
 }) {
-  const [columns, setColumns] = useState(initialSort || [])
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const {
+    isCommentModalOpen,
+    onOpenCommentModalChange,
+    columns,
+    setColumns,
+    addColumns,
+    addCommentToColumn,
+    selectedColumn
+  } = useColumns()
 
   const handleCompleteTest = () => {
     onCompleteTest(columns).then(() => {
@@ -31,18 +42,6 @@ export default function CardSortingTest({
     })
   }
 
-  const addColumns = (newCategory) => {
-    const { category } = newCategory
-    const newColumns = [
-      ...columns,
-      {
-        id: `column-${columns.length + 1}`,
-        category: category,
-        cards: []
-      }
-    ]
-    setColumns(newColumns)
-  }
   return (
     <>
       <div className="px-20">
@@ -83,6 +82,12 @@ export default function CardSortingTest({
           </DndProvider>
         </span>
       </div>
+      <CommentModal
+        isOpen={isCommentModalOpen}
+        onOpenChange={onOpenCommentModalChange}
+        onComment={addCommentToColumn}
+        comment={selectedColumn?.comment}
+      />
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -118,7 +123,6 @@ export default function CardSortingTest({
 }
 
 CardSortingTest.propTypes = {
-  initialSort: propTypes.array.isRequired,
   testType: propTypes.string.isRequired,
   onContinue: propTypes.func.isRequired,
   onBack: propTypes.func.isRequired,

@@ -13,6 +13,7 @@ import {
   CardSortingTest,
   Congratulation
 } from '../features/card-sorting-test/solve-test-steps'
+// Columns context
 
 export default function TestPage() {
   const { accessLink } = useParams()
@@ -49,17 +50,24 @@ export default function TestPage() {
         )
       case 2:
         return (
-          <Questionary
-            questions={test?.questions}
+          <CardSortingTest
+            testType={test?.type}
+            onBack={prevStep}
             onContinue={nextStep}
-            onSaveAnswers={saveAnswers}
-            loading={loading}
+            onCompleteTest={completeTest}
           />
         )
+      // return (
+      //   <Questionary
+      //     questions={test?.questions}
+      //     onContinue={nextStep}
+      //     onSaveAnswers={saveAnswers}
+      //     loading={loading}
+      //   />
+      // )
       case 3:
         return (
           <CardSortingTest
-            initialSort={solution?.sort}
             testType={test?.type}
             onBack={prevStep}
             onContinue={nextStep}
