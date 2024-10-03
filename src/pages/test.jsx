@@ -50,21 +50,13 @@ export default function TestPage() {
         )
       case 2:
         return (
-          <CardSortingTest
-            testType={test?.type}
-            onBack={prevStep}
+          <Questionary
+            questions={test?.questions}
             onContinue={nextStep}
-            onCompleteTest={completeTest}
+            onSaveAnswers={saveAnswers}
+            loading={loading}
           />
         )
-      // return (
-      //   <Questionary
-      //     questions={test?.questions}
-      //     onContinue={nextStep}
-      //     onSaveAnswers={saveAnswers}
-      //     loading={loading}
-      //   />
-      // )
       case 3:
         return (
           <CardSortingTest

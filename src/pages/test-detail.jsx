@@ -194,15 +194,15 @@ export default function TestDetailPage() {
                           }
                         />
                       </Tab>
-                      <Tab title="Comentarios">
-                        <CommentsTable />
-                      </Tab>
                     </Tabs>
                   </Tab>
                   <Tab title="Cuestionario" key="questionary">
                     <QuestionaryTable
                       questionary={testDetail?.questions || []}
                     />
+                  </Tab>
+                  <Tab title="Comentarios">
+                    <CommentsTable comments={testDetail?.comments} />
                   </Tab>
                 </Tabs>
               </section>
